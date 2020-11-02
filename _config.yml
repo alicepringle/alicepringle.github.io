@@ -1,1 +1,17 @@
-theme: jekyll-theme-slate
+# Site settings
+title: Alice Pringle blog
+email: 
+description: "Musings of a Data Scientist."
+baseurl: ""
+url: "https://alicepringle.github.io"
+github_username:  alicepringle
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+highlighter: rouge
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
