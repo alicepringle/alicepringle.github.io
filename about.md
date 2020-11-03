@@ -5,4 +5,4 @@ permalink: /about/
 includelink: true
 ---
 
-Coming soon...
+Coming soon!
