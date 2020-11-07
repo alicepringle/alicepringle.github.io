@@ -24,6 +24,7 @@ First, we simply need to load the data set into a Pandas dataframe.
 By using df.head and df.info() we can quickly gauge the nature of the dataset. By exploring the data further, we can see that each of the 1460 data points represent unique houses.
 
 **Exploration**
+
 To start we’re going to look at the Sale Price (in $USD) for each property, as this is what we are predicting. 
 
 <div class="imgcap">
