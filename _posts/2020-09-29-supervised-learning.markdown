@@ -6,6 +6,17 @@ excerpt: "An End-to-End Machine Learning Example."
 date:   2020-11-07 10:00:00
 mathjax: false
 ---
+<div class="imgcap">
+<img src="/assets/bio/house_coin.jpg">
+<div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
+</div>
+
+In this demonstration, we will be solving the problem of predicting house prices based on their various features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using a machine learning model to predict prices, we allow the most significant factors to be considered rather than solely relying on what we deem to be relevant. 
+
+<div class="imgcap">
+<img src="/assets/bio/house_graph.jpg">
+<div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
+</div>
 
 In this demonstration, we will be solving the problem of predicting house prices based on their various features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using a machine learning model to predict prices, we allow the most significant factors to be considered rather than solely relying on what we deem to be relevant. 
 
@@ -14,11 +25,12 @@ The data we will be using is the [Ames Housing dataset](http://jse.amstat.org/v1
 The full code from this example is available on [GitHub](http://jse.amstat.org/v19n3/decock.pdf), along with a more [elegant solution](http://jse.amstat.org/v19n3/decock.pdf) using pipelines.
 
 **Data Acquisition**
+
 First, we simply need to load the data set into a Pandas dataframe. 
 
 <div class="imgcap">
-<img src="/assets/bio/expected_loss.png">
-<div class="thecap">Expected weight based on simple calorie deficit formula (blue) vs. measured weight (red).</div>
+<img src="/assets/bio/house_coin.jpg">
+<div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
 </div>
 
 By using df.head and df.info() we can quickly gauge the nature of the dataset. By exploring the data further, we can see that each of the 1460 data points represent unique houses.
@@ -51,9 +63,11 @@ An important part of machine learning is to train the model only using TRAINING 
 
 
 **Data Preparation** 
+
 Before we can jump into predicting house prices, we need to take a closer look at the data we’re using and how it should be represented. We’ve chosen features containing two types of data - categorical and continuous. These need to be dealt with differently. 
 
 **One-Hot Encoding**
+
 In order to represent categorical data in a format the model can understand, we use encoding. 
 
 One method would be to represent each category as a number, for example the Quality of Build could be represented numerically, where 1=Ex, 2=Gd, 3=Fa and 4=Ta. This would however place more importance on data with greater numerical values. 
@@ -63,6 +77,7 @@ To avoid ording the categorical data, we use One-Hot encoding. This encodes each
 It is important to use the same encoder for the test set as for the training set. This deal with any cases where a category is found in the test set which was not present in the training set.
 
 **Continuous Data**
+
 The process of deciding how to best represent the continuous data is a bit more involved. 
 
 Let’s take a look at the column YearBuilt. There are a couple of options of how we could represent this. 
@@ -86,17 +101,20 @@ Standardising the data is beneficial when using linear regression as it speeds u
 It is important to standardise the test data using the same scaler as the train data. This is done below.
 
 **Evaluation Metric**
+
 The last thing to do before training our model is to choose an evaluation metric. This is the metric by which we measure the success of a prediction. For example, a basic eva,uation metric could be to look at the absolute error between a predicted and actual house price. 
 
 In this case, we will choose the logarithmic root mean square error (lrmse). By using a logarithmic metric, the errors in predicting expensive houses and cheap houses will have an equal effect on the result.
 
 **Train Model**
+
 We will try two machine learning methods - Random Forrest Regression and Linear Regression. Using Scikit-learn, it’s extremely quick to implement these models. 
 
 1. Random Forrest Regression
 2. Linear Regression
 
 **Make Predictions on the Test Set**
+
 Now that our models have learnt the relationship between the features and prices in the test set, we can test them out on the test set. 
 
 To do this we must make predictions on the test set and use the evaluation metric to compare them to the correct house prices.  
@@ -104,6 +122,7 @@ To do this we must make predictions on the test set and use the evaluation metri
 By doing this we can see that the best choice is Random Forrest Regression, which has an accuracy of the x%, while Linear Regression gives an accuracy of x%. 
 
 **Improving our model**
+
 We now have a model which predicts house prices with x% accuracy. This isn’t bad but there’s scope for improvement. 
 
 We can do this using hyperparameter tuning. We can think of this as adjusting the settings of the model to get the best performance. 
@@ -117,9 +136,11 @@ Rather than go through every combination of hyperparameters, we can use Randomiz
 We can see that our hyperparameter tuning has improved the accuracy the model by x%. This may not seem like much but depending on the application of the model, this could represent millions of pounds to a company. 
 
 **Overfitting**
+
 Random Forests are prone to overfitting. We can minimise this problem using K-Fold Cross-Validation when using RandomizedSearchCV. In this case, we do this by setting cv=3. 
 
 **Visualisations**
+
 Lastly, we can consider our findings from the model. It is worth looking at the importance of each variable in predicting price. Below, the features used are ordered from most to least important. 
 
 Overall built quality is clearly a strong indicator of Sale Price. An unexpectedly significant feature perhaps is……
@@ -128,6 +149,7 @@ So do we really need to consider the rest of the features at all? From running o
 Using x and y, we can see the prediction accuracy drop from x to x. So, yes - though it may not seem like it, our 8 features are all significant.
 
 **Conclusion**
+
 I hope this showed how simple it is to implement a machine learning model from start to finish! To improve the model we could use more of the features and consider feature engineering. As we’ve found, 90% of the work is in data preparation and it really is worth considering how to best represent the data. 
 
 <div class="imgcap">
