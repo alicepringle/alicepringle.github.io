@@ -6,13 +6,10 @@ excerpt: "An End-to-End Machine Learning Example."
 date:   2020-11-07 10:00:00
 mathjax: false
 ---
-<div class="imgcap">
+<!-- <div class="imgcap">
 <img src="/assets/bio/house_coin.jpg">
 <div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
-</div>
-
-In this demonstration, we will be solving the problem of predicting house prices based on their various features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using a machine learning model to predict prices, we allow the most significant factors to be considered rather than solely relying on what we deem to be relevant. 
-
+</div> -->
 <div class="imgcap">
 <img src="/assets/bio/house_graph.jpg">
 <div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
@@ -26,10 +23,10 @@ The full code from this example is available on [GitHub](http://jse.amstat.org/v
 
 **Data Acquisition**
 
-First, we simply need to load the data set into a Pandas dataframe. 
+To get started, we simply need to load the data set into a Pandas dataframe. 
 
 <div class="imgcap">
-<img src="/assets/bio/house_coin.jpg">
+<img src="/assets/bio/Screenshot 2020-11-07 at 16.26.22.png">
 <div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
 </div>
 
@@ -40,7 +37,7 @@ By using df.head and df.info() we can quickly gauge the nature of the dataset. B
 To start we’re going to look at the Sale Price (in $USD) for each property, as this is what we are predicting. 
 
 <div class="imgcap">
-<img src="/assets/bio/expected_loss.png">
+<img src="/assets/bio/Screenshot 2020-11-07 at 16.26.22.png">
 <div class="thecap">Distribution Graph.</div>
 </div>
 
