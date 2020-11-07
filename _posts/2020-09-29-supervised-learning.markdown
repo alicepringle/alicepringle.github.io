@@ -7,7 +7,8 @@ date:   2020-09-29 10:00:00
 mathjax: false
 ---
 
-Throughout my life I never paid too much attention to health, exercise, diet or nutrition. I knew that you're supposed to get some exercise and eat vegetables or something, but it stopped at that ("mom said"-) level of abstraction. I also knew that I can probably get away with some ignorance while I am young, but at some point I was messing with my health-adjusted life expectancy. So about halfway through 2019 I resolved to spend some time studying these topics in greater detail and dip my toes into some biohacking. And now... it's been a year!
+In this demonstration, we will be solving the problem of predicting house prices based on their features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using a machine learning model to predict prices, we allow the most significant factors to be considered rather than solely relying on what we deem to be relevant. 
+
 
 <div class="imgcap">
 <img src="/assets/bio/subway_map.png">
