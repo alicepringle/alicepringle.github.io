@@ -30,6 +30,17 @@ To get started, we simply need to load the data set into a Pandas dataframe.
 <div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
 </div>
 
+```
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "age": 25
+  all_data = pd.read_csv("../data/train.csv")  
+  df = pd.DataFrame(data=all_data)
+}
+```
+
+
 By using df.head and df.info() we can quickly gauge the nature of the dataset. By exploring the data further, we can see that each of the 1460 data points represent unique houses.
 
 **Exploration**
