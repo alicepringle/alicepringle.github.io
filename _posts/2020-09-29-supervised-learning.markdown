@@ -1,9 +1,9 @@
 ---
 layout: post
 comments: false
-title:  "Biohacking Lite"
-excerpt: "Dipping toes into biochemistry, energy metabolism and running some biohacking lite experiments."
-date:   2020-09-29 10:00:00
+title:  "Predicting House Prices"
+excerpt: "An End-to-End Machine Learning Example."
+date:   2020-11-07 10:00:00
 mathjax: false
 ---
 
@@ -11,14 +11,9 @@ In this demonstration, we will be solving the problem of predicting house prices
 
 The data we will be using is the [Ames Housing dataset](http://jse.amstat.org/v19n3/decock.pdf), which contains a wide number of features of the houses, ranging from their location to the height of their basements! 
 
-The full code from this example is available on [GitHub](http://jse.amstat.org/v19n3/decock.pdf), along with a more [elegant solution](http://jse.amstat.org/v19n3/decock.pdf) where using pipelines.
+The full code from this example is available on [GitHub](http://jse.amstat.org/v19n3/decock.pdf), along with a more [elegant solution](http://jse.amstat.org/v19n3/decock.pdf) using pipelines.
 
-<div class="imgcap">
-<img src="/assets/bio/subway_map.png">
-<div class="thecap">A "subway map" of human metabolism. For the purposes of this post the important parts are the metabolism of the three macronutrients (green: lipids, red: carbohydrates, blue: amino acids), and orange: where the magic happens - oxidative metabolism, including the citric acid cycle, the electron transport chain and the ATP Synthase. <a href="https://drive.google.com/file/d/1WC7v8HE4XtNd_yvsJReliX6_LN3agCFb/view?usp=sharing">full detail link.</a></div>
-</div>
-
-**Data Aquisition**
+**Data Acquisition**
 First, we simply need to load the data set into a Pandas dataframe. 
 
 <div class="imgcap">
