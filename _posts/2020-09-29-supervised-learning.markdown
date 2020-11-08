@@ -37,7 +37,6 @@ To start we’re going to look at the Sale Price (in $USD) for each property, as
 
 <div class="imgcap">
 <img src="/assets/bio/price_skew.png">
-<div class="thecap">Distribution Graph.</div>
 </div>
 
 We can see that the data is skewed to the left. This is not surprising as it reflects the distribution of wealth, resulting in a small number of expensive houses while the bulk remain at the lower end of the price spectrum. 
@@ -50,9 +49,6 @@ The correlations of the 4 chosen continuous features are as follows:
 - Ground Floor Area (square feet): Correlation = 0.709
 - Garage Car Capacity: Correlation = 0.640
 - Year Built = 0.523
-<!-- - Garage Area (square feet): Correlation = 0.623
-- Basement Area (square feet): Correlation = 0.614
-- First Floor Area (square feet): Correlation = 0.606 -->
 
 In addition, 3 strongly correlated categorical features are:
 - External Quality
