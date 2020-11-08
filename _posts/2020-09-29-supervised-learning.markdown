@@ -62,7 +62,7 @@ In addition, 3 strongly correlated categorical features are:
 These each fall into 5 categories assessing Quality. We can see the correlation between External Quality and Sale Price below:
 
 <div class="imgcap">
-<img src="/assets/bio/corellation.png">
+<img src="/assets/bio/correlation.png">
 </div>
 
 It is important to consider deal with missing data but this isn’t always necessary. None of the features we have chosen have any missing data, so we can move on…

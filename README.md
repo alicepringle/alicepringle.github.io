@@ -6,7 +6,7 @@ This is my blog, uses [Jekyll](http://jekyllrb.com/).
 
 - [Install prerequisites](https://jekyllrb.com/docs/installation/)
 - `gem install jekyll bundler`
-- `bundle init`
+- `gem install jekyll bundler`
 - `bundle add jekyll`
 - `bundle install`
 - Build site and make available on local server `bundle exec jekyll serve`
