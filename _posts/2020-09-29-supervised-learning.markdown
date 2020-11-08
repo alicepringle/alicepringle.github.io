@@ -12,7 +12,6 @@ mathjax: false
 </div> -->
 <div class="imgcap">
 <img src="/assets/bio/house_graph.jpg">
-<div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
 </div>
 
 In this demonstration, we will be solving the problem of predicting house prices based on their various features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using a machine learning model to predict prices, we allow the most significant factors to be considered rather than solely relying on what we deem to be relevant. 
@@ -25,30 +24,19 @@ The full code from this example is available on [GitHub](http://jse.amstat.org/v
 
 To get started, we simply need to load the data set into a Pandas dataframe. 
 
-<div class="imgcap">
-<img src="/assets/bio/Screenshot 2020-11-07 at 16.26.22.png">
-<div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
-</div>
-
 ```
-{
-  "firstName": "John",
-  "lastName": "Smith",
-  "age": 25
-  all_data = pd.read_csv("../data/train.csv")  
-  df = pd.DataFrame(data=all_data)
-}
+df = pd.read_csv("../data/train.csv")  
 ```
 
 
-By using df.head and df.info() we can quickly gauge the nature of the dataset. By exploring the data further, we can see that each of the 1460 data points represent unique houses.
+By using df.head() and df.info() we can quickly gauge the nature of the dataset. By exploring the data further, we can see that each of the 1460 data points represent unique houses.
 
 **Exploration**
 
 To start we’re going to look at the Sale Price (in $USD) for each property, as this is what we are predicting. 
 
 <div class="imgcap">
-<img src="/assets/bio/Screenshot 2020-11-07 at 16.26.22.png">
+<img src="/assets/bio/price_skew.png">
 <div class="thecap">Distribution Graph.</div>
 </div>
 
@@ -56,19 +44,38 @@ We can see that the data is skewed to the left. This is not surprising as it ref
 
 We must now explore which features are most relevant when determining the price. An easy way to do this is to look at the correlation of each variable with Sale Price. 
 
-The first row of the plot above shows the 8 most strongly correlated features. These features are as follows:
+The correlations of the 4 chosen continuous features are as follows:
 
-- year built
-- year built
-- year built
+- Overall Quality (1-10, where 10 is excellent): Correlation = 0.791
+- Ground Floor Area (square feet): Correlation = 0.709
+- Garage Car Capacity: Correlation = 0.640
+- Year Built = 0.523
+<!-- - Garage Area (square feet): Correlation = 0.623
+- Basement Area (square feet): Correlation = 0.614
+- First Floor Area (square feet): Correlation = 0.606 -->
+
+In addition, 3 strongly correlated categorical features are:
+- External Quality
+- Heating Quality
+- Kitchen Quality
+
+These each fall into 5 categories assessing Quality. We can see the correlation between External Quality and Sale Price below:
+
+<div class="imgcap">
+<img src="/assets/bio/corellation.png">
+</div>
 
 It is important to consider deal with missing data but this isn’t always necessary. None of the features we have chosen have any missing data, so we can move on…
 
-
 **Training and Test Set**
 
-An important part of machine learning is to train the model only using TRAINING data. It’s best to set aside a subset of the data for testing as soon as possible. In this case we will use x% of the set for training data and y% of the test for testing data. 
+An important part of machine learning is to train the model only using TRAINING data. It’s best to set aside a subset of the data for testing as soon as possible. In this case we will use 80% of the set for training data and 20% of the test for testing data. Note that we shuffle the data before splitting. 
+```
+X = df['OverallQual', 'YearBuilt', 'ExterQual', 'HeatingQC', 'KitchenQual','GrLivArea', 'GarageCars']
+Y=df['SalePrice']
 
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, shuffle=True)
+```
 
 **Data Preparation** 
 
