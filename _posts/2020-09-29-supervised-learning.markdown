@@ -221,11 +221,13 @@ model_random.fit(X_train_cleaned,y_train)
 
 Our hyperparameter tuning has improved the accuracy the model by 14%. This may not seem like much but depending on the application of the model, this could represent millions of pounds to a company. The updated model gives an accuracy of 87.71% and lrmse of 0.073.
 
-
 **Overfitting**
 
-Random Forests are prone to overfitting. We can minimise this problem using [K-Fold Cross-Validation](https://scikit-learn.org/stable/modules/cross_validation.html) when using RandomizedSearchCV. In this case, we do this by setting cv=3. 
+Random Forests are prone to overfitting. We can minimise this problem using [K-Fold Cross-Validation](https://scikit-learn.org/stable/modules/cross_validation.html), where the model is trained using k-1 sets of data, rather than one. We can do this when using RandomizedSearchCV. In this case, we use 3 folds by setting cv=3. 
 
+<p align="center">
+<img src="/assets/bio/grid_search_cross_validation.png" alt="grid_search_cross_validation" style="width:75%"/>
+</p>
 
 **Conclusion**
 
