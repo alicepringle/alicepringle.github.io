@@ -127,8 +127,6 @@ Taking the log of the values reduces the skew from 0.60 to 0.04:
 <img src="/assets/bio/unskew_yr.png" style="width:49%">
 </div>
 
-Incontrast to x, we can see in taking the sqareroot of the x values reduces the skew from x to x.
-
 Lastly, we must consider **normalising** the continuous data. This involves setting the mean of the data to zero and the standard deviation to one.  
 
 Standardising the data is beneficial when using linear regression as it speeds up the process and makes it more numerically robust. It is not necessary for Random Forrest Regression, but as we have not decided upon a model yet, we will standardise the data.  
@@ -228,14 +226,6 @@ Our hyperparameter tuning has improved the accuracy the model by 14%. This may n
 
 Random Forests are prone to overfitting. We can minimise this problem using [K-Fold Cross-Validation](https://scikit-learn.org/stable/modules/cross_validation.html) when using RandomizedSearchCV. In this case, we do this by setting cv=3. 
 
-**Visualisations**
-
-Lastly, we can consider our findings from the model. It is worth looking at the importance of each variable in predicting price. Below, the features used are ordered from most to least important. 
-
-Overall built quality is clearly a strong indicator of Sale Price. An unexpectedly significant feature perhaps is……
-
-So do we really need to consider the rest of the features at all? From running our model just  
-Using x and y, we can see the prediction accuracy drop from x to x. So, yes - though it may not seem like it, our 8 features are all significant.
 
 **Conclusion**
 
