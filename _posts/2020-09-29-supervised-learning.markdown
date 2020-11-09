@@ -13,17 +13,17 @@ mathjax: false
 
 <img src="/assets/bio/house_coin.jpg" alt="house_coin" style="width:95%"/>
 
-The general framework when solving a problem using Machine Learning is pretty consitstant. No matter the complexity of the problem, we need to concider a number of core principles, from how we treat Training/ Test data, to the representation of different features. 
+The general framework when solving a problem using machine learning is pretty consistent. No matter the complexity of the problem, we need to consider a number of core principles, from how we treat training/ test data, to the representation of different features. 
 
-In this post we will run through a Machine Learning Example from start to finish. The aim is to show an comprehensive process which can be applied to a number of problems.   
+In this post we will run through a machine learning example from start to finish. The aim is to show an comprehensive process which can be applied to a number of problems.   
 
 **Problem Introduction**
 
-We will be tackling the problem of predicting house prices based on their features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using Machine Learning to predict prices, we can allow the most significant factors to be considered rather than relying on what we deem to be relevant.
+We will be tackling the problem of predicting house prices based on their features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using machine learning to predict prices, we can allow the most significant factors to be considered rather than relying on what we deem to be relevant.
 
 The data we will be using is the [Ames Housing dataset](http://jse.amstat.org/v19n3/decock.pdf), which contains a wide number of features of the houses, ranging from their location to the height of their basements! 
 
-The full code from this example is available on [GitHub](https://github.com/alicepringle/super-learning/blob/main/HousePrices.ipynb), along with a more [elegant solution](https://github.com/alicepringle/super-learning/blob/main/HousePrices_Pipelines.ipynb) using pipelines.
+The full code from this example is available on [GitHub](https://github.com/alicepringle/super-learning/blob/main/HousePrices.ipynb).
 
 **Data Acquisition**
 
@@ -33,11 +33,11 @@ To get started, we simply need to load the data set into a Pandas dataframe.
 df = pd.read_csv("../data/train.csv")  
 ```
 
-By using [df.head()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html) and [df.info()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.info.html) we can quickly gauge the nature of the dataset. It's worthing checking that each of the 1460 data points represent unique houses. Luckily for us, they do.
+By using [df.head()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html) and [df.info()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.info.html) we can quickly gauge the nature of the dataset. It's worth checking that each of the 1460 data points represent unique houses. Luckily for us, they do.
 
 **Exploration**
 
-To start off it makes to look at the variable we're prediciting, in this case the Sale Price ($USD).
+To start off it makes to look at the variable we're predicting, in this case the Sale Price ($USD).
 
 <img src="/assets/bio/price_skew.png" alt="price_skew" style="width:100%"/>
 
@@ -61,11 +61,11 @@ These each fall into 5 categories assessing Quality: Ex, Gd, Fa, Ta. We can see 
 
 <img src="/assets/bio/correlation.png" alt="correlation" style="width:100%"/>
 
-Before we move on we need to concider missing data. In this case, none of the features we have chosen have any missing data so we can move on… 
+Before we move on we need to consider missing data. In this case, none of the features we have chosen have any missing data so we can move on… 
 
 **Training and Test Set**
 
-An important part of machine learning is to train the model only using **training** data. It’s best to set aside a subset of the data for testing as soon as possible. A good rule of thumb is to use 80% for training data and 20% for testing data. Note that we shuffle the data before splitting. 
+To estimate our model's performance on unseen data, we randomly reserve 20% of the houses for evaluation. The remaining 80% is used to train the model. It’s best to set aside a subset of the data for testing as soon as possible.
 ```
 X = df[['OverallQual', 'YearBuilt', 'ExterQual', 'HeatingQC', 'KitchenQual', 'GrLivArea', 'GarageCars']]
 Y=df['SalePrice']
@@ -78,7 +78,7 @@ Before we can jump into predicting house prices, we need to take a closer look a
 
 ***Categorical Data: One-Hot Encoding***
 
-In order to represent categorical data in a format the model can understand, we use encoding. In order to avoid ording the categorical data, we use One-Hot encoding. This encodes each of the categories as columns of binary data, as shown below. 
+In order to represent categorical data in a format the model can understand, we use encoding. In order to avoid ordering the categorical data, we use One-Hot encoding. This encodes each of the categories as columns of binary data, as shown below. 
 
 <img src="/assets/bio/one-hot.png" alt="one-hot" style="width:100%"/>
 
@@ -92,7 +92,7 @@ enc = OneHotEncoder(handle_unknown='ignore', sparse=False)
 enc.fit(X_train_cat)
 
 X_train_onehot = enc.transform(X_train_cat)
-X_test_onehot = enc.transform(X_test_cat) enc.transform(X_test_cat)
+X_test_onehot = enc.transform(X_test_cat) 
 ```
 ***Continuous Data***
 
@@ -100,7 +100,7 @@ The process of deciding **how to best represent** the continuous data is a bit m
 
 Let’s take a look at the column `YearBuilt`. There are a couple of options of how we could represent this:
 
-- We could choose to make it a categorical feature, having a category per year. This would avoid losing the information about the actual year each house was built, which may be significant. For example, Georgan houses may typically be worth a different amount to houses built in the Victorian Era. The creation of so many categories, however, is unlikely to be helpful in our model. 
+- We could choose to make it a categorical feature, having a category per year. This would avoid losing the information about the actual year each house was built, which may be significant. For example, Georgian houses may typically be worth a different amount to houses built in the Victorian Era. The creation of so many categories, however, is unlikely to be helpful in our model. 
 
 - A preferable approach would be to calculate the number of years old each house is at the point of sale. Unfortunately, we don't have data about the year of sale of each house so this isn't possible.
 
@@ -112,7 +112,7 @@ X_train['YearBuilt'] = abs(X_train['YearBuilt']-most_recent)
 X_test['YearBuilt'] = abs(X_test['YearBuilt']-most_recent)
 ```
  
-Secondly, we need to look at the **distribution** of each of these features. The features `YearBuilt` and `GrLivArea` are both skewed. Skewness can be reduced by taking the log or squareroot of each value. In this case, sqrt best reduces the skew for `YearBuilt` and log for `GrLivArea`. To avoid taking the log of zero, we add 1 to all values. 
+Secondly, we need to look at the **distribution** of each of these features. The features `YearBuilt` and `GrLivArea` are both skewed. Skewness can be reduced by taking the log or square root of each value. In this case, sqrt best reduces the skew for `YearBuilt` and log for `GrLivArea`. To avoid taking the log of zero, we add 1 to all values. 
 
 ```
 X_train['YearBuilt'] = np.sqrt(X_train['YearBuilt'])
@@ -131,7 +131,7 @@ Taking the log of the `YearBuilt` values reduces the skew from 0.60 to 0.04:
 
 Lastly, it's helpful to **standardise** the continuous data. This involves setting the mean of the data to zero and the standard deviation to one.  
 
-This is beneficial when using linear regression as it speeds up the process and makes it more numerically robust. It's not necessary for Random Forrest Regression, but as we haven't decided upon a model yet, let's standardise the data.  
+This is beneficial when using linear regression as it reduces the number of iterations gradient descent takes to converge and makes it more numerically robust. It's not necessary for Random Forrest Regression, but as we haven't decided upon a model yet, let's standardise the data.  
 
 When doing this, we need to ensure we use the same for the test data as we did for the train data:
 
@@ -213,9 +213,9 @@ model_random.fit(X_train_cleaned,y_train)
 
 Our hyperparameter tuning has reduced the lrmse by 3.26%. This may not seem like much but depending on the application of the model, this could represent millions of pounds to a company. You may notice that the accuracy of the model was marginally reduced but this model is preferable according to our evaluation metric.
 
-**Overfitting**
+**Cross-Validation**
 
-Random Forests are prone to overfitting. We can minimise this problem using [K-Fold Cross-Validation](https://scikit-learn.org/stable/modules/cross_validation.html), where the model is trained using k-1 sets of data, rather than one. We can do this while using RandomizedSearchCV. In this case, we use 3 folds by setting cv=3. 
+[K-Fold Cross-Validation](https://scikit-learn.org/stable/modules/cross_validation.html) allows us to test on every house in our dataset, improving our estimate of how the model will perform on unseen data. For example, with 5-fold cross-validation, the model is trained on 4/5ths of the data and tested on the remaining 5th. This process is repeated 5 times until all the data has been used for evaluation. We can do this while using RandomizedSearchCV. In this case, we use 3 folds by setting cv=3. 
 
 <p align="center">
 <img src="/assets/bio/grid_search_cross_validation.png" alt="grid_search_cross_validation" style="width:60%"/>
