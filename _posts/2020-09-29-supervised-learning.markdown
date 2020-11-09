@@ -226,7 +226,11 @@ Our hyperparameter tuning has improved the accuracy the model by 14%. This may n
 Random Forests are prone to overfitting. We can minimise this problem using [K-Fold Cross-Validation](https://scikit-learn.org/stable/modules/cross_validation.html), where the model is trained using k-1 sets of data, rather than one. We can do this when using RandomizedSearchCV. In this case, we use 3 folds by setting cv=3. 
 
 <p align="center">
-<img src="/assets/bio/grid_search_cross_validation.png" alt="grid_search_cross_validation" style="width:50%"/>
+<img src="/assets/bio/grid_search_cross_validation.png" alt="grid_search_cross_validation" style="width:45%"/>
+</p>
+
+<p align="center">
+<img src="/assets/bio/grid_search_cross_validation.png" alt="grid_search_cross_validation" style="width:40%"/>
 </p>
 
 **Conclusion**
