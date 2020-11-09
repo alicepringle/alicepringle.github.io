@@ -17,6 +17,8 @@ mathjax: false
 <img src="/assets/bio/house_graph.jpg" alt="house_graph"
 width="150" height="100" />
 
+<img src="/assets/bio/house_graph.jpg" alt="house_graph" />
+
 In this demonstration, we will be solving the problem of predicting house prices based on their various features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using a machine learning model to predict prices, we allow the most significant factors to be considered rather than solely relying on what we deem to be relevant. 
 
 The data we will be using is the [Ames Housing dataset](http://jse.amstat.org/v19n3/decock.pdf), which contains a wide number of features of the houses, ranging from their location to the height of their basements! 
