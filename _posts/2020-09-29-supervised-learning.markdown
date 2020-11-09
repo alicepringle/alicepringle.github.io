@@ -45,7 +45,7 @@ We can see that the data is positively skewed. This isn't surprising as we'd exp
 
 With 79 features, it would be helpful to explore **which features are most relevant** when determining the price. An easy way to do this is to look at the correlation of each variable with `SalePrice`. 
 
-The correlations of the 4 chosen continuous features are as follows:
+The correlation of the 4 chosen continuous features is as follows:
 
 - Overall Quality (1-10, where 10 is excellent): Correlation = 0.791
 - Ground Floor Area (square feet): Correlation = 0.709
@@ -98,7 +98,7 @@ enc.fit(X_train_cat)
 X_train_onehot = enc.transform(X_train_cat)
 X_test_onehot = enc.transform(X_test_cat) enc.transform(X_test_cat)
 ```
-**Continuous Data**
+***Continuous Data***
 
 The process of deciding **how to best represent** the continuous data is a bit more involved. 
 
