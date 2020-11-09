@@ -11,11 +11,11 @@ mathjax: false
 <div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
 </div> -->
 
-<img src="/assets/bio/house_coin.jpg" alt="house_coin" style="width:100%"/>
+<img src="/assets/bio/house_coin.jpg" alt="house_coin" style="width:95%"/>
 
 The general framework when solving a problem using Machine Learning is pretty consitstant. No matter the complexity of the problem, we need to concider a number of core principles, from how we treat Training/ Test data, to the representation of different features. 
 
-In this post we will run through a Machine Learning Example from start to finish. The aim is to show an logical process which can be applied to a number of problems.   
+In this post we will run through a Machine Learning Example from start to finish. The aim is to show an comprehensive process which can be applied to a number of problems.   
 
 **Problem Introduction**
 
@@ -78,15 +78,11 @@ Before we can jump into predicting house prices, we need to take a closer look a
 
 ***Categorical Data: One-Hot Encoding***
 
-In order to represent categorical data in a format the model can understand, we use encoding. 
-
-One method would be to represent each category as a number, for example the Quality of Build could be represented numerically, where 1=Ex, 2=Gd, 3=Fa and 4=Ta. This would however place more importance on data with greater numerical values. 
-
-To avoid ording the categorical data, we use One-Hot encoding. This encodes each of the categories as columns of binary data as shown below. 
+In order to represent categorical data in a format the model can understand, we use encoding. In order to avoid ording the categorical data, we use One-Hot encoding. This encodes each of the categories as columns of binary data, as shown below. 
 
 <img src="/assets/bio/one-hot.png" alt="one-hot" style="width:100%"/>
 
-It is important to use the same encoder for the test set as for the training set. This deal with any cases where a category is found in the test set which was not present in the training set. 
+It's important to use the same encoder for the test set as for the training set. This allows us to deal with any cases where a category is found in the test set which was not present in the training set. 
 
 ```
 X_train_cat=X_train[['ExterQual', 'HeatingQC', 'KitchenQual']]
@@ -104,11 +100,11 @@ The process of deciding **how to best represent** the continuous data is a bit m
 
 Let’s take a look at the column `YearBuilt`. There are a couple of options of how we could represent this:
 
-- We could choose to make it a categorical feature, having a category per year. This would avoid losing the information about the actual year each house was built, which may be significant. For example, Georgan houses may typically be worth a different amount to houses built in the Victorian Era. The creation of so many categories however is unlikely to be helpful in our model. 
+- We could choose to make it a categorical feature, having a category per year. This would avoid losing the information about the actual year each house was built, which may be significant. For example, Georgan houses may typically be worth a different amount to houses built in the Victorian Era. The creation of so many categories, however, is unlikely to be helpful in our model. 
 
-- A preferable approach would be to calculate the number of years old each house is at the point of sale. Data giving the year of sale of each house is not available, however.
+- A preferable approach would be to calculate the number of years old each house is at the point of sale. Unfortunately, we don't have data about the year of sale of each house so this isn't possible.
 
-- The chosen approach is therefore to calculate the relative age of each house. This is done by comparing the year built of the newest house in the training data (2010) to each house. It is important to check that the test set is also compared to 2010, rather than to the newest house in the test set.   
+- The best option is therefore to calculate the relative age of each house. This is done by comparing the year built of the newest house in the training data (2010) to each house. It's important to check that the test set is also compared to 2010, rather than to the newest house in the test set.   
 
 ```
 most_recent = max(X_train['YearBuilt'])
@@ -116,7 +112,7 @@ X_train['YearBuilt'] = abs(X_train['YearBuilt']-most_recent)
 X_test['YearBuilt'] = abs(X_test['YearBuilt']-most_recent)
 ```
  
-Secondly, we must consider the **distribution** of each of these features. The features `YearBuilt` and `GrLivArea` are both skewed. Skewness can be reduced by taking the log or squareroot of each value. In this case sqrt best reduces the skew for `YearBuilt` and log for `GrLivArea`. To avoid taking the log of zero, we add 1 to all values. 
+Secondly, we need to look at the **distribution** of each of these features. The features `YearBuilt` and `GrLivArea` are both skewed. Skewness can be reduced by taking the log or squareroot of each value. In this case, sqrt best reduces the skew for `YearBuilt` and log for `GrLivArea`. To avoid taking the log of zero, we add 1 to all values. 
 
 ```
 X_train['YearBuilt'] = np.sqrt(X_train['YearBuilt'])
@@ -126,18 +122,18 @@ X_train['GrLivArea'] = np.log(X_train['GrLivArea']+1)
 X_test['GrLivArea'] = np.log(X_test['GrLivArea']+1)
 ```
 
-Taking the log of the values reduces the skew from 0.60 to 0.04:
+Taking the log of the `YearBuilt` values reduces the skew from 0.60 to 0.04:
 
 <div class="imgcap">
 <img src="/assets/bio/skew_yr.png" style="width:49%">
 <img src="/assets/bio/unskew_yr.png" style="width:49%">
 </div>
 
-Lastly, we must consider **normalising** the continuous data. This involves setting the mean of the data to zero and the standard deviation to one.  
+Lastly, it's helpful to **standardise** the continuous data. This involves setting the mean of the data to zero and the standard deviation to one.  
 
-Standardising the data is beneficial when using linear regression as it speeds up the process and makes it more numerically robust. It is not necessary for Random Forrest Regression, but as we have not decided upon a model yet, we will standardise the data.  
+This is beneficial when using linear regression as it speeds up the process and makes it more numerically robust. It's not necessary for Random Forrest Regression, but as we haven't decided upon a model yet, let's standardise the data.  
 
-It is important to standardise the test data using the same scaler as the train data:
+When doing this, we need to ensure we use the same for the test data as we did for the train data:
 
 ```
 X_train_cont = X_train[['OverallQual', 'YearBuilt','GrLivArea', 'GarageCars']]
@@ -149,7 +145,7 @@ X_train_scaled = scaler.transform(X_train_cont)
 X_test_scaled = scaler.transform(X_test_cont)
 ```
 
-Finally, we must join the continuous and categorical data together again:
+Finally, we can join the continuous and categorical data together again:
 
 ```
 X_test_cleaned = np.concatenate((X_test_onehot,X_test_scaled), axis=1)
@@ -158,47 +154,47 @@ X_train_cleaned = np.concatenate((X_train_onehot,X_train_scaled), axis=1)
 
 **Evaluation Metric**
 
-We need to choose an evaluation metric. This is the metric by which we measure the success of a prediction. For example, a basic evaluation metric could be to look at the absolute error between a predicted and actual house price. 
+Next, let's choose an evaluation metric. This is the metric by which we measure the success of a prediction. For example, a basic evaluation metric could be the absolute error between the predicted and actual house prices. 
 
-In this case, we will choose the logarithmic root mean square error (lrmse). By using a logarithmic metric, the errors in predicting expensive houses and cheap houses will have an equal effect on the result.
+In this case, we will choose the Logarithmic Root Mean Square Error (lrmse). By using a logarithmic metric, the errors in predicting expensive houses and cheap houses will have an equal effect on the result.
 
 **Train Model**
 
-We will try two machine learning methods - Random Forrest Regression and Linear Regression. Using Scikit-learn, it’s extremely quick to implement these models. 
+We will try two machine learning methods - **Random Forrest Regression** and **Linear Regression**. Using Scikit-learn, it’s really quick to implement models, so we can try different ones out. 
 
 1. Random Forrest Regression
 ```
 model = RandomForestRegressor()
-model.fit(X_train_cleaned,y_train)
+model.fit(X_train_cleaned,Y_train)
 ```
 2. Linear Regression
 ```
 model = RandomForestRegressor()
-model.fit(X_train_cleaned,y_train)
+model.fit(X_train_cleaned,Y_train)
 ```
 
 **Make Predictions on the Test Set**
 
-Now that our models have learnt the relationship between the features and prices in the test set, we can test them out on the test set. 
+Now that our models have learnt the relationship between the features and prices in the test set, we can try them out on the test set. 
 ```
 predictions = model.predict(X_test_cleaned)
-sns.regplot(y_test,predictions)
+sns.regplot(Y_test,predictions)
 ```
-The plot below show the difference between the predicted prices and the actual prices when using Random Forrest Regression:
+The plot below shows the difference between the predicted prices and the actual prices when using Random Forrest Regression:
 <p align="center">
 <img src="/assets/bio/results.png" alt="results" style="width:50%"/>
 </p>
-By testing both models, we find that the best choice is Random Forrest Regression, which had an accuracy of the 85.6% and lrmse of 0.15, while Linear Regression had an accuracy of 78.2% and lrmse of 0.26. 
+By testing both models, we find that the best choice is **Random Forrest Regression**, which had an accuracy of the 85.6% and lrmse of 0.15, while Linear Regression had an accuracy of 78.2% and lrmse of 0.26. 
 
-**Improving our model**
+**Hyperparameter tuning**
 
-We now have a model which predicts house prices with 85.6% accuracy. This isn’t bad but there’s scope for improvement. 
+We now have a model which predicts house prices with 86% accuracy. This isn’t bad but there’s scope for improvement. 
 
-We can do this using hyperparameter tuning. We can think of this as adjusting the settings of the model to get the best performance. 
+We can do this using **hyperparameter tuning**. We can think of this as adjusting the settings of the model to get the best performance. 
 
 The best way to do this is essentially to try out different combinations of hyperparameters (settings) and see which work best. Thankfully, we can do this quickly using Scikit-learn.
 
- We need to identify which hyperparameters are most important for our model. Once we’ve found these, we can create a grid of hyperparameter combinations. You can see how to create the grid below on [GitHub](http://jse.amstat.org/v19n3/decock.pdf).
+ We need to look up which hyperparameters are most important for our model from the API. Once we know these, we can create a grid of hyperparameter combinations. You can see how to create this grid on [GitHub](http://jse.amstat.org/v19n3/decock.pdf).
 
 ```
 {'bootstrap': [True, False],
@@ -209,7 +205,7 @@ The best way to do this is essentially to try out different combinations of hype
  'n_estimators': [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]}
  ```
 
-Rather than go through every combination of hyperparameters, we can use [RandomizedSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html) to try a random choice of combinations from the grid. This will choose the best combination according to our evaluation metric (lrmse).
+Rather than go through every combination of hyperparameters, we can use [RandomizedSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html) to try a random choice of combinations from the grid. This chooses the best combination according to our evaluation metric (lrmse).
 ```
 model_random = RandomizedSearchCV(estimator = model, param_distributions = random_grid, n_iter = 50, cv = 3, verbose=2, random_state=42, n_jobs = -1, scoring=scorer)
 model_random.fit(X_train_cleaned,y_train)
@@ -219,7 +215,7 @@ Our hyperparameter tuning has reduced the lrmse by 3.26%. This may not seem like
 
 **Overfitting**
 
-Random Forests are prone to overfitting. We can minimise this problem using [K-Fold Cross-Validation](https://scikit-learn.org/stable/modules/cross_validation.html), where the model is trained using k-1 sets of data, rather than one. We can do this when using RandomizedSearchCV. In this case, we use 3 folds by setting cv=3. 
+Random Forests are prone to overfitting. We can minimise this problem using [K-Fold Cross-Validation](https://scikit-learn.org/stable/modules/cross_validation.html), where the model is trained using k-1 sets of data, rather than one. We can do this while using RandomizedSearchCV. In this case, we use 3 folds by setting cv=3. 
 
 <p align="center">
 <img src="/assets/bio/grid_search_cross_validation.png" alt="grid_search_cross_validation" style="width:60%"/>
@@ -227,4 +223,6 @@ Random Forests are prone to overfitting. We can minimise this problem using [K-F
 
 **Conclusion**
 
-So we have a model predicting house prices to 84% accuracy, with a lrmse of 0.149. I hope this showed how simple it is to implement a machine learning model from start to finish! To improve the model we could use more of the features and consider feature engineering. As we’ve found, 90% of the work is in data preparation and it really is worth considering how to best represent the data. 
+So, we now have a model predicting house prices to 84% accuracy, with a lrmse of 0.149. Not a bad start. There a lots of things we can do to improve this model. The obvious next step would be to use more features - we have 79 to choose from! 
+
+ For now, I hope this has shown how simple it is to implement a machine learning model from start to finish.   
