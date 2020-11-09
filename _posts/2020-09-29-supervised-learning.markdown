@@ -181,9 +181,9 @@ predictions = model.predict(X_test_cleaned)
 sns.regplot(y_test,predictions)
 ```
 The plot below show the difference between the predicted prices and the actual prices when using Random Forrest Regression:
-
-<img src="/assets/bio/results.png" alt="results" style="width:100%"/>
-
+<p align="center">
+<img src="/assets/bio/results.png" alt="results" style="width:50%"/>
+</p>
 By testing both models, we find that the best choice is Random Forrest Regression, which has an accuracy of the 81.0% and lrmse of 0.20, while Linear Regression gives an accuracy of 78.2% and lrmse of 0.26. 
 
 **Improving our model**
@@ -221,7 +221,8 @@ model_random.fit(X_train_cleaned,y_train)
 
 ```
 
-Our hyperparameter tuning has improved the accuracy the model by x%. This may not seem like much but depending on the application of the model, this could represent millions of pounds to a company. 
+Our hyperparameter tuning has improved the accuracy the model by 14%. This may not seem like much but depending on the application of the model, this could represent millions of pounds to a company. The updated model gives an accuracy of 87.71% and lrmse of 0.073.
+
 
 **Overfitting**
 
