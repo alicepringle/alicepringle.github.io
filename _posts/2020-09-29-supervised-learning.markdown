@@ -67,7 +67,7 @@ It is important to consider deal with missing data but this isn’t always neces
 
 An important part of machine learning is to train the model only using TRAINING data. It’s best to set aside a subset of the data for testing as soon as possible. In this case we will use 80% of the set for training data and 20% of the test for testing data. Note that we shuffle the data before splitting. 
 ```
-X = df['OverallQual', 'YearBuilt', 'ExterQual', 'HeatingQC', 'KitchenQual','GrLivArea', 'GarageCars']
+X = df['OverallQual', 'YearBuilt', 'ExterQual', 'HeatingQC', 'KitchenQual','GrLivArea',\ 'GarageCars']
 Y=df['SalePrice']
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, shuffle=True)
@@ -85,8 +85,19 @@ One method would be to represent each category as a number, for example the Qual
 
 To avoid ording the categorical data, we use One-Hot encoding. This encodes each of the categories as columns of binary data as shown below. 
 
-It is important to use the same encoder for the test set as for the training set. This deal with any cases where a category is found in the test set which was not present in the training set.
+<div class="imgcap">
+<img src="/assets/bio/one-hot.png">
+</div>
 
+It is important to use the same encoder for the test set as for the training set. This deal with any cases where a category is found in the test set which was not present in the training set. 
+
+Below, `X_train_cat` and `X_test_cat` are the relivent categorical data for the training and test sets.
+```
+enc = OneHotEncoder(handle_unknown='ignore', sparse=False)
+enc.fit(X_train_cat)
+X_train_onehot = enc.transform(X_train_cat)
+X_test_onehot = enc.transform(X_test_cat)
+```
 **Continuous Data**
 
 The process of deciding how to best represent the continuous data is a bit more involved. 
@@ -168,14 +179,3 @@ I hope this showed how simple it is to implement a machine learning model from s
 <img src="/assets/bio/combustion2.png" style="width:41%">
 <div class="thecap"><a href="https://ib.bioninja.com.au/higher-level/topic-8-metabolism-cell/untitled/energy-conversions.html">Left</a>: Chemically, as far as inputs and outputs alone are concerned, burning things with fire is identical to burning food for our energy needs. <a href="https://www.docsity.com/en/energy-conversion-fundamentals-of-biology-lecture-slides/241294/">Right</a>: the complete oxidation of C-C / C-H rich molecules powers not just our bodies but a lot of our technology.</div>
 </div>
-
-> We've now established in some detail that fat is your body's primary battery pack and we'd like to breathe it out. Let's turn to the details of the accounting.
-
- St. Jeor for men is *10 x weight (kg) + 6.25 x height (cm) - 5 x age (y) + 5*). Anyone who's been at the gym and ran on a treadmill will know just how much of a free win this is. I start panting and sweating uncomfortably just after a small few 
-
-
-<pre style="font-size:10px">
-2019-09-23: Morning weight 180.5. Ate 1700, expended 2710 (Δkcal 1010, Δw 0.29). Tomorrow should weight 180.2
-2019-10-01: Morning weight 179.4. Ate 2000, expended 2637 (Δkcal 637, Δw 0.18). Tomorrow should weight 179.2
-2019-10-02: Morning weight 179.5. Ate 1920, expended 2552 (Δkcal 632, Δw 0.18). Tomorrow should weight 179.3
-</pre>
