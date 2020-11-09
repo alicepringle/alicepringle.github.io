@@ -72,12 +72,11 @@ Y=df['SalePrice']
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, shuffle=True)
 ```
-
 **Data Preparation** 
 
 Before we can jump into predicting house prices, we need to take a closer look at the data we’re using and how it should be represented. We’ve chosen features containing two types of data - categorical and continuous. These need to be dealt with differently. 
 
-**One-Hot Encoding**
+***Categorical Data: One-Hot Encoding***
 
 In order to represent categorical data in a format the model can understand, we use encoding. 
 
