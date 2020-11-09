@@ -11,7 +11,7 @@ mathjax: false
 <div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
 </div> -->
 
-<img src="/assets/bio/house_graph.jpg" alt="house_graph" style="width:100%"/>
+<img src="/assets/bio/house_coin.jpg" alt="house_coin" style="width:100%"/>
 
 The general framework when solving a problem using Machine Learning is pretty consitstant. No matter the complexity of the problem, we need to concider a number of core principles, from how we treat Training/ Test data, to the representation of different features. 
 
