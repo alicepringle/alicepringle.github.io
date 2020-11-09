@@ -10,11 +10,8 @@ mathjax: false
 <img src="/assets/bio/house_coin.jpg">
 <div class="thecap">[Image source](https://www.propertyreporter.co.uk/property/rightmove-predict-2-house-price-rise-in-2020.html).</div>
 </div> -->
-<div class="imgcap">
-<img src="/assets/bio/house_graph.jpg">
-</div>
 
-<img src="/assets/bio/house_graph.jpg" alt="house_graph" />
+<img src="/assets/bio/house_graph.jpg" alt="house_graph" style="width:100%"/>
 
 In this demonstration, we will be solving the problem of predicting house prices based on their various features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using a machine learning model to predict prices, we allow the most significant factors to be considered rather than solely relying on what we deem to be relevant. 
 
@@ -189,29 +186,46 @@ The plot below show the difference between the predicted prices and the actual p
 
 By testing both models, we find that the best choice is Random Forrest Regression, which has an accuracy of the 81.0% and lrmse of 0.20, while Linear Regression gives an accuracy of 78.2% and lrmse of 0.26. 
 
-**Evaluation Metric**
-
-We need to choose an evaluation metric. This is the metric by which we measure the success of a prediction. For example, a basic evaluation metric could be to look at the absolute error between a predicted and actual house price. 
-
-In this case, we will choose the logarithmic root mean square error (lrmse). By using a logarithmic metric, the errors in predicting expensive houses and cheap houses will have an equal effect on the result.
-
 **Improving our model**
 
-We now have a model which predicts house prices with x% accuracy. This isn’t bad but there’s scope for improvement. 
+We now have a model which predicts house prices with 81% accuracy. This isn’t bad but there’s scope for improvement. 
 
 We can do this using hyperparameter tuning. We can think of this as adjusting the settings of the model to get the best performance. 
 
 The best way to do this is essentially to try out different combinations of hyperparameters (settings) and see which work best. Thankfully, we can do this quickly using Scikit-learn.
 
-We need to identify which hyperparameters are most important for our model. Once we’ve found these, we can create a grid of hyperparameter combinations.
+We need to identify which hyperparameters are most important for our model. Once we’ve found these, we can create a grid of hyperparameter combinations. You can see how to create the hyperparameter grid below on [GitHub](http://jse.amstat.org/v19n3/decock.pdf).
 
-Rather than go through every combination of hyperparameters, we can use RandomizedSearchCV to try a random choice of combinations from the grid.
+```
+{'bootstrap': [True, False],
+ 'max_depth': [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, None],
+ 'max_features': ['auto', 'sqrt'],
+ 'min_samples_leaf': [1, 2, 4],
+ 'min_samples_split': [2, 5, 10],
+ 'n_estimators': [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]}
+ ```
 
-We can see that our hyperparameter tuning has improved the accuracy the model by x%. This may not seem like much but depending on the application of the model, this could represent millions of pounds to a company. 
+Rather than go through every combination of hyperparameters, we can use [RandomizedSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html) to try a random choice of combinations from the grid. This will choose the best combination according to our evaluation metric.
+```
+from sklearn.metrics import fbeta_score, make_scorer
+def rmsle(predictions, y_test):
+    y_test=y_test[predictions>=0]
+    predictions=predictions[predictions>=0]
+    mse = mean_squared_log_error(y_test,predictions)
+    return math.sqrt(mse)
+
+scorer = make_scorer(rmsle, greater_is_better=False)
+
+model_random = RandomizedSearchCV(estimator = model, param_distributions = random_grid, n_iter = 50, cv = 3, verbose=2, random_state=42, n_jobs = -1, scoring=scorer)
+model_random.fit(X_train_cleaned,y_train)
+
+```
+
+Our hyperparameter tuning has improved the accuracy the model by x%. This may not seem like much but depending on the application of the model, this could represent millions of pounds to a company. 
 
 **Overfitting**
 
-Random Forests are prone to overfitting. We can minimise this problem using K-Fold Cross-Validation when using RandomizedSearchCV. In this case, we do this by setting cv=3. 
+Random Forests are prone to overfitting. We can minimise this problem using [K-Fold Cross-Validation](https://scikit-learn.org/stable/modules/cross_validation.html) when using RandomizedSearchCV. In this case, we do this by setting cv=3. 
 
 **Visualisations**
 
@@ -225,9 +239,3 @@ Using x and y, we can see the prediction accuracy drop from x to x. So, yes - th
 **Conclusion**
 
 I hope this showed how simple it is to implement a machine learning model from start to finish! To improve the model we could use more of the features and consider feature engineering. As we’ve found, 90% of the work is in data preparation and it really is worth considering how to best represent the data. 
-
-<div class="imgcap">
-<img src="/assets/bio/combustion.jpeg" style="width:57%">
-<img src="/assets/bio/combustion2.png" style="width:41%">
-<div class="thecap"><a href="https://ib.bioninja.com.au/higher-level/topic-8-metabolism-cell/untitled/energy-conversions.html">Left</a>: Chemically, as far as inputs and outputs alone are concerned, burning things with fire is identical to burning food for our energy needs. <a href="https://www.docsity.com/en/energy-conversion-fundamentals-of-biology-lecture-slides/241294/">Right</a>: the complete oxidation of C-C / C-H rich molecules powers not just our bodies but a lot of our technology.</div>
-</div>
