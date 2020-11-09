@@ -37,7 +37,10 @@ By using df.head() and df.info() we can quickly gauge the nature of the dataset.
 
 To start we’re going to look at the Sale Price (in $USD) for each property, as this is what we are predicting. 
 
-<img src="/assets/bio/price_skew.png" alt="price_skew" />
+<img src="/assets/bio/price_skew.png" alt="price_skew" style="width:100%"/>
+
+
+
 
 We can see that the data is skewed to the left. This is not surprising as it reflects the distribution of wealth, resulting in a small number of expensive houses while the bulk remain at the lower end of the price spectrum. 
 
@@ -129,8 +132,8 @@ X_test['GrLivArea'] = np.log(X_test['GrLivArea']+1)
 Taking the log of the values reduces the skew from 0.60 to 0.04:
 
 <div class="imgcap">
-<img src="/assets/bio/skew_yr.jpeg" style="width:50%">
-<img src="/assets/bio/unskew_yr.png" style="width:50%">
+<img src="/assets/bio/skew_yr.jpeg" style="width:49%">
+<img src="/assets/bio/unskew_yr.png" style="width:49%">
 </div>
 
 Incontrast to x, we can see in taking the sqareroot of the x values reduces the skew from x to x.
