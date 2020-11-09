@@ -13,7 +13,13 @@ mathjax: false
 
 <img src="/assets/bio/house_graph.jpg" alt="house_graph" style="width:100%"/>
 
-In this demonstration, we will be solving the problem of predicting house prices based on their various features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using a machine learning model to predict prices, we allow the most significant factors to be considered rather than solely relying on what we deem to be relevant. 
+The general framework when solving a problem using Machine Learning is pretty consitstant. No matter the complexity of the problem, we need to concider a number of core principles, from how we treat Training/ Test data, to the representation of different features. 
+
+In this post we will run through a Machine Learning Example from start to finish. The aim is to show an logical process which can be applied to a number of problems.   
+
+**Problem Introduction**
+
+We will be tackling the problem of predicting house prices based on their features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using Machine Learning to predict prices, we can allow the most significant factors to be considered rather than relying on what we deem to be relevant.
 
 The data we will be using is the [Ames Housing dataset](http://jse.amstat.org/v19n3/decock.pdf), which contains a wide number of features of the houses, ranging from their location to the height of their basements! 
 
@@ -27,19 +33,17 @@ To get started, we simply need to load the data set into a Pandas dataframe.
 df = pd.read_csv("../data/train.csv")  
 ```
 
-
-By using df.head() and df.info() we can quickly gauge the nature of the dataset. By exploring the data further, we can see that each of the 1460 data points represent unique houses.
+By using [df.head()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html) and [df.info()](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.info.html) we can quickly gauge the nature of the dataset. It's worthing checking that each of the 1460 data points represent unique houses. Luckily for us, they do.
 
 **Exploration**
 
-To start we’re going to look at the Sale Price (in $USD) for each property, as this is what we are predicting. 
+To start off it makes to look at the variable we're prediciting, in this case the Sale Price ($USD).
 
 <img src="/assets/bio/price_skew.png" alt="price_skew" style="width:100%"/>
 
+We can see that the data is positively skewed. This isn't surprising as we'd expect house prices to reflect the distribution of wealth. It makes sense, therefore, that there are a small number of expensive houses while the bulk remain at the lower end of the price spectrum. 
 
-We can see that the data is skewed to the left. This is not surprising as it reflects the distribution of wealth, resulting in a small number of expensive houses while the bulk remain at the lower end of the price spectrum. 
-
-We must now explore which features are most relevant when determining the price. An easy way to do this is to look at the correlation of each variable with Sale Price. 
+With 79 features, it would be helpful to explore **which features are most relevant** when determining the price. An easy way to do this is to look at the correlation of each variable with `SalePrice`. 
 
 The correlations of the 4 chosen continuous features are as follows:
 
@@ -49,19 +53,19 @@ The correlations of the 4 chosen continuous features are as follows:
 - Year Built = 0.523
 
 In addition, 3 strongly correlated categorical features are:
-- External Quality
-- Heating Quality
-- Kitchen Quality
+- External Quality 
+- Heating Quality 
+- Kitchen Quality 
 
-These each fall into 5 categories assessing Quality. We can see the correlation between External Quality and Sale Price below:
+These each fall into 5 categories assessing Quality: Ex, Gd, Fa, Ta. We can see the correlation between External Quality and Sale Price below:
 
 <img src="/assets/bio/correlation.png" alt="correlation" style="width:100%"/>
 
-It is important to consider deal with missing data but this isn’t always necessary. None of the features we have chosen have any missing data, so we can move on…
+Before we move on we need to concider missing data. In this case, none of the features we have chosen have any missing data so we can move on… 
 
 **Training and Test Set**
 
-An important part of machine learning is to train the model only using TRAINING data. It’s best to set aside a subset of the data for testing as soon as possible. In this case we will use 80% of the set for training data and 20% of the test for testing data. Note that we shuffle the data before splitting. 
+An important part of machine learning is to train the model only using **training** data. It’s best to set aside a subset of the data for testing as soon as possible. A good rule of thumb is to use 80% for training data and 20% for testing data. Note that we shuffle the data before splitting. 
 ```
 X = df[['OverallQual', 'YearBuilt', 'ExterQual', 'HeatingQC', 'KitchenQual', 'GrLivArea', 'GarageCars']]
 Y=df['SalePrice']
@@ -224,4 +228,4 @@ Random Forests are prone to overfitting. We can minimise this problem using [K-F
 
 **Conclusion**
 
-So we have a model predicting hosue prices to 84% accuracy, with a lrmse of 0.149. I hope this showed how simple it is to implement a machine learning model from start to finish! To improve the model we could use more of the features and consider feature engineering. As we’ve found, 90% of the work is in data preparation and it really is worth considering how to best represent the data. 
+So we have a model predicting house prices to 84% accuracy, with a lrmse of 0.149. I hope this showed how simple it is to implement a machine learning model from start to finish! To improve the model we could use more of the features and consider feature engineering. As we’ve found, 90% of the work is in data preparation and it really is worth considering how to best represent the data. 
