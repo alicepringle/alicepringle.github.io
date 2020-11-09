@@ -40,8 +40,6 @@ To start we’re going to look at the Sale Price (in $USD) for each property, as
 <img src="/assets/bio/price_skew.png" alt="price_skew" style="width:100%"/>
 
 
-
-
 We can see that the data is skewed to the left. This is not surprising as it reflects the distribution of wealth, resulting in a small number of expensive houses while the bulk remain at the lower end of the price spectrum. 
 
 We must now explore which features are most relevant when determining the price. An easy way to do this is to look at the correlation of each variable with Sale Price. 
@@ -60,9 +58,7 @@ In addition, 3 strongly correlated categorical features are:
 
 These each fall into 5 categories assessing Quality. We can see the correlation between External Quality and Sale Price below:
 
-<div class="imgcap">
-<img src="/assets/bio/correlation.png">
-</div>
+<img src="/assets/bio/correlation.png" alt="correlation" style="width:100%"/>
 
 It is important to consider deal with missing data but this isn’t always necessary. None of the features we have chosen have any missing data, so we can move on…
 
@@ -88,9 +84,7 @@ One method would be to represent each category as a number, for example the Qual
 
 To avoid ording the categorical data, we use One-Hot encoding. This encodes each of the categories as columns of binary data as shown below. 
 
-<div class="imgcap">
-<img src="/assets/bio/one-hot.png">
-</div>
+<img src="/assets/bio/one-hot.png" alt="one-hot" style="width:100%"/>
 
 It is important to use the same encoder for the test set as for the training set. This deal with any cases where a category is found in the test set which was not present in the training set. 
 
@@ -190,9 +184,8 @@ predictions = model.predict(X_test_cleaned)
 sns.regplot(y_test,predictions)
 ```
 The plot below show the difference between the predicted prices and the actual prices when using Random Forrest Regression:
-<div class="imgcap">
-<img src="/assets/bio/results.png">
-</div>
+
+<img src="/assets/bio/results.png" alt="results" style="width:100%"/>
 
 By testing both models, we find that the best choice is Random Forrest Regression, which has an accuracy of the 81.0% and lrmse of 0.20, while Linear Regression gives an accuracy of 78.2% and lrmse of 0.26. 
 
