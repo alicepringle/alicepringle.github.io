@@ -230,7 +230,7 @@ Random Forests are prone to overfitting. We can minimise this problem using [K-F
 </p>
 
 <p align="center">
-<img src="/assets/bio/grid_search_cross_validation.png" alt="grid_search_cross_validation" style="width:40%"/>
+<img src="/assets/bio/grid_search_cross_validation.png" alt="grid_search_cross_validation" style="width:50%"/>
 </p>
 
 **Conclusion**
