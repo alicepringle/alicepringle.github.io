@@ -132,7 +132,7 @@ X_test['GrLivArea'] = np.log(X_test['GrLivArea']+1)
 Taking the log of the values reduces the skew from 0.60 to 0.04:
 
 <div class="imgcap">
-<img src="/assets/bio/skew_yr.jpeg" style="width:49%">
+<img src="/assets/bio/skew_yr.png" style="width:49%">
 <img src="/assets/bio/unskew_yr.png" style="width:49%">
 </div>
 
@@ -163,7 +163,7 @@ X_train_cleaned = np.concatenate((X_train_onehot,X_train_scaled), axis=1)
 
 **Evaluation Metric**
 
-The last thing to do before training our model is to choose an evaluation metric. This is the metric by which we measure the success of a prediction. For example, a basic eva,uation metric could be to look at the absolute error between a predicted and actual house price. 
+We need to choose an evaluation metric. This is the metric by which we measure the success of a prediction. For example, a basic evaluation metric could be to look at the absolute error between a predicted and actual house price. 
 
 In this case, we will choose the logarithmic root mean square error (lrmse). By using a logarithmic metric, the errors in predicting expensive houses and cheap houses will have an equal effect on the result.
 
@@ -172,15 +172,35 @@ In this case, we will choose the logarithmic root mean square error (lrmse). By 
 We will try two machine learning methods - Random Forrest Regression and Linear Regression. Using Scikit-learn, it’s extremely quick to implement these models. 
 
 1. Random Forrest Regression
+```
+model = RandomForestRegressor()
+model.fit(X_train_cleaned,y_train)
+```
 2. Linear Regression
+```
+model = RandomForestRegressor()
+model.fit(X_train_cleaned,y_train)
+```
 
 **Make Predictions on the Test Set**
 
 Now that our models have learnt the relationship between the features and prices in the test set, we can test them out on the test set. 
+```
+predictions = model.predict(X_test_cleaned)
+sns.regplot(y_test,predictions)
+```
+The plot below show the difference between the predicted prices and the actual prices when using Random Forrest Regression:
+<div class="imgcap">
+<img src="/assets/bio/results.png">
+</div>
 
-To do this we must make predictions on the test set and use the evaluation metric to compare them to the correct house prices.  
+By testing both models, we find that the best choice is Random Forrest Regression, which has an accuracy of the 81.0% and lrmse of 0.20, while Linear Regression gives an accuracy of 78.2% and lrmse of 0.26. 
 
-By doing this we can see that the best choice is Random Forrest Regression, which has an accuracy of the x%, while Linear Regression gives an accuracy of x%. 
+**Evaluation Metric**
+
+We need to choose an evaluation metric. This is the metric by which we measure the success of a prediction. For example, a basic evaluation metric could be to look at the absolute error between a predicted and actual house price. 
+
+In this case, we will choose the logarithmic root mean square error (lrmse). By using a logarithmic metric, the errors in predicting expensive houses and cheap houses will have an equal effect on the result.
 
 **Improving our model**
 
