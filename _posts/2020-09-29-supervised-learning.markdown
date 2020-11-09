@@ -63,7 +63,7 @@ It is important to consider deal with missing data but this isn’t always neces
 
 An important part of machine learning is to train the model only using TRAINING data. It’s best to set aside a subset of the data for testing as soon as possible. In this case we will use 80% of the set for training data and 20% of the test for testing data. Note that we shuffle the data before splitting. 
 ```
-X = df['OverallQual', 'YearBuilt', 'ExterQual', 'HeatingQC', 'KitchenQual', 'GrLivArea', 'GarageCars']
+X = df[['OverallQual', 'YearBuilt', 'ExterQual', 'HeatingQC', 'KitchenQual', 'GrLivArea', 'GarageCars']]
 Y=df['SalePrice']
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, shuffle=True)
@@ -85,12 +85,15 @@ To avoid ording the categorical data, we use One-Hot encoding. This encodes each
 
 It is important to use the same encoder for the test set as for the training set. This deal with any cases where a category is found in the test set which was not present in the training set. 
 
-Below, `X_train_cat` and `X_test_cat` are the relivent categorical data for the training and test sets.
 ```
+X_train_cat=X_train[['ExterQual', 'HeatingQC', 'KitchenQual']]
+X_test_cat=X_test[['ExterQual', 'HeatingQC', 'KitchenQual']]
+
 enc = OneHotEncoder(handle_unknown='ignore', sparse=False)
 enc.fit(X_train_cat)
+
 X_train_onehot = enc.transform(X_train_cat)
-X_test_onehot = enc.transform(X_test_cat)
+X_test_onehot = enc.transform(X_test_cat) enc.transform(X_test_cat)
 ```
 **Continuous Data**
 
@@ -135,11 +138,11 @@ It is important to standardise the test data using the same scaler as the train 
 
 ```
 X_train_cont = X_train[['OverallQual', 'YearBuilt','GrLivArea', 'GarageCars']]
+X_test_cont = X_test[['OverallQual', 'YearBuilt','GrLivArea', 'GarageCars']]
+
 scaler = StandardScaler()
 scaler.fit(X_train_cont)
 X_train_scaled = scaler.transform(X_train_cont)
-
-X_test_cont = X_test[['OverallQual', 'YearBuilt','GrLivArea', 'GarageCars']]
 X_test_scaled = scaler.transform(X_test_cont)
 ```
 
@@ -182,17 +185,17 @@ The plot below show the difference between the predicted prices and the actual p
 <p align="center">
 <img src="/assets/bio/results.png" alt="results" style="width:50%"/>
 </p>
-By testing both models, we find that the best choice is Random Forrest Regression, which has an accuracy of the 81.0% and lrmse of 0.20, while Linear Regression gives an accuracy of 78.2% and lrmse of 0.26. 
+By testing both models, we find that the best choice is Random Forrest Regression, which had an accuracy of the 85.6% and lrmse of 0.15, while Linear Regression had an accuracy of 78.2% and lrmse of 0.26. 
 
 **Improving our model**
 
-We now have a model which predicts house prices with 81% accuracy. This isn’t bad but there’s scope for improvement. 
+We now have a model which predicts house prices with 85.6% accuracy. This isn’t bad but there’s scope for improvement. 
 
 We can do this using hyperparameter tuning. We can think of this as adjusting the settings of the model to get the best performance. 
 
 The best way to do this is essentially to try out different combinations of hyperparameters (settings) and see which work best. Thankfully, we can do this quickly using Scikit-learn.
 
-We need to identify which hyperparameters are most important for our model. Once we’ve found these, we can create a grid of hyperparameter combinations. You can see how to create the hyperparameter grid below on [GitHub](http://jse.amstat.org/v19n3/decock.pdf).
+ We need to identify which hyperparameters are most important for our model. Once we’ve found these, we can create a grid of hyperparameter combinations. You can see how to create the grid below on [GitHub](http://jse.amstat.org/v19n3/decock.pdf).
 
 ```
 {'bootstrap': [True, False],
@@ -203,23 +206,13 @@ We need to identify which hyperparameters are most important for our model. Once
  'n_estimators': [200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000]}
  ```
 
-Rather than go through every combination of hyperparameters, we can use [RandomizedSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html) to try a random choice of combinations from the grid. This will choose the best combination according to our evaluation metric.
+Rather than go through every combination of hyperparameters, we can use [RandomizedSearchCV](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.RandomizedSearchCV.html) to try a random choice of combinations from the grid. This will choose the best combination according to our evaluation metric (lrmse).
 ```
-from sklearn.metrics import fbeta_score, make_scorer
-def rmsle(predictions, y_test):
-    y_test=y_test[predictions>=0]
-    predictions=predictions[predictions>=0]
-    mse = mean_squared_log_error(y_test,predictions)
-    return math.sqrt(mse)
-
-scorer = make_scorer(rmsle, greater_is_better=False)
-
 model_random = RandomizedSearchCV(estimator = model, param_distributions = random_grid, n_iter = 50, cv = 3, verbose=2, random_state=42, n_jobs = -1, scoring=scorer)
 model_random.fit(X_train_cleaned,y_train)
-
 ```
 
-Our hyperparameter tuning has improved the accuracy the model by 14%. This may not seem like much but depending on the application of the model, this could represent millions of pounds to a company. The updated model gives an accuracy of 87.71% and lrmse of 0.073.
+Our hyperparameter tuning has reduced the lrmse by 3.26%. This may not seem like much but depending on the application of the model, this could represent millions of pounds to a company. You may notice that the accuracy of the model was marginally reduced but this model is preferable according to our evaluation metric.
 
 **Overfitting**
 
@@ -229,10 +222,6 @@ Random Forests are prone to overfitting. We can minimise this problem using [K-F
 <img src="/assets/bio/grid_search_cross_validation.png" alt="grid_search_cross_validation" style="width:60%"/>
 </p>
 
-<p align="center">
-<img src="/assets/bio/grid_search_cross_validation.png" alt="grid_search_cross_validation" style="width:50%"/>
-</p>
-
 **Conclusion**
 
-I hope this showed how simple it is to implement a machine learning model from start to finish! To improve the model we could use more of the features and consider feature engineering. As we’ve found, 90% of the work is in data preparation and it really is worth considering how to best represent the data. 
+So we have a model predicting hosue prices to 84% accuracy, with a lrmse of 0.149. I hope this showed how simple it is to implement a machine learning model from start to finish! To improve the model we could use more of the features and consider feature engineering. As we’ve found, 90% of the work is in data preparation and it really is worth considering how to best represent the data. 
