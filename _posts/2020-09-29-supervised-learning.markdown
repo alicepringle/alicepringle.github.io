@@ -14,6 +14,9 @@ mathjax: false
 <img src="/assets/bio/house_graph.jpg">
 </div>
 
+<img src="/assets/bio/house_graph.jpg" alt="house_graph"
+width="150" height="100" />
+
 In this demonstration, we will be solving the problem of predicting house prices based on their various features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using a machine learning model to predict prices, we allow the most significant factors to be considered rather than solely relying on what we deem to be relevant. 
 
 The data we will be using is the [Ames Housing dataset](http://jse.amstat.org/v19n3/decock.pdf), which contains a wide number of features of the houses, ranging from their location to the height of their basements! 
@@ -67,7 +70,7 @@ It is important to consider deal with missing data but this isn’t always neces
 
 An important part of machine learning is to train the model only using TRAINING data. It’s best to set aside a subset of the data for testing as soon as possible. In this case we will use 80% of the set for training data and 20% of the test for testing data. Note that we shuffle the data before splitting. 
 ```
-X = df['OverallQual', 'YearBuilt', 'ExterQual', 'HeatingQC', 'KitchenQual','GrLivArea',\ 'GarageCars']
+X = df['OverallQual', 'YearBuilt', 'ExterQual', 'HeatingQC', 'KitchenQual', 'GrLivArea', 'GarageCars']
 Y=df['SalePrice']
 
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, shuffle=True)
