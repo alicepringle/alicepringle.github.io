@@ -223,6 +223,4 @@ Random Forests are prone to overfitting. We can minimise this problem using [K-F
 
 **Conclusion**
 
-So, we now have a model predicting house prices to 84% accuracy, with a lrmse of 0.149. Not a bad start. There a lots of things we can do to improve this model. The obvious next step would be to use more features - we have 79 to choose from! 
-
- For now, I hope this has shown how simple it is to implement a machine learning model from start to finish.   
+So, we now have a model predicting house prices to 84% accuracy, with a lrmse of 0.149. Not a bad start. There a lots of things we can do to improve this model. The obvious next step would be to use more features - we have 79 to choose from! For now, I hope this has shown how simple it is to implement a machine learning model from start to finish.   
