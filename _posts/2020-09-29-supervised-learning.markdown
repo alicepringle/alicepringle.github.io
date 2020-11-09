@@ -14,9 +14,6 @@ mathjax: false
 <img src="/assets/bio/house_graph.jpg">
 </div>
 
-<img src="/assets/bio/house_graph.jpg" alt="house_graph"
-width="150" height="100" />
-
 <img src="/assets/bio/house_graph.jpg" alt="house_graph" />
 
 In this demonstration, we will be solving the problem of predicting house prices based on their various features. There are a plethora of factors which determine the price of a house, many of which are more significant than we might expect. By using a machine learning model to predict prices, we allow the most significant factors to be considered rather than solely relying on what we deem to be relevant. 
@@ -40,9 +37,7 @@ By using df.head() and df.info() we can quickly gauge the nature of the dataset.
 
 To start we’re going to look at the Sale Price (in $USD) for each property, as this is what we are predicting. 
 
-<div class="imgcap">
-<img src="/assets/bio/price_skew.png">
-</div>
+<img src="/assets/bio/price_skew.png" alt="price_skew" />
 
 We can see that the data is skewed to the left. This is not surprising as it reflects the distribution of wealth, resulting in a small number of expensive houses while the bulk remain at the lower end of the price spectrum. 
 
