@@ -23,7 +23,7 @@ We will be tackling the problem of predicting house prices based on their featur
 
 The data we will be using is the [Ames Housing dataset](http://jse.amstat.org/v19n3/decock.pdf), which contains a wide number of features of the houses, ranging from their location to the height of their basements! 
 
-The full code from this example is available on [GitHub](http://jse.amstat.org/v19n3/decock.pdf), along with a more [elegant solution](http://jse.amstat.org/v19n3/decock.pdf) using pipelines.
+The full code from this example is available on [GitHub](https://github.com/alicepringle/super-learning/blob/main/HousePrices.ipynb), along with a more [elegant solution](https://github.com/alicepringle/super-learning/blob/main/HousePrices_Pipelines.ipynb) using pipelines.
 
 **Data Acquisition**
 
@@ -194,7 +194,7 @@ We can do this using **hyperparameter tuning**. We can think of this as adjustin
 
 The best way to do this is essentially to try out different combinations of hyperparameters (settings) and see which work best. Thankfully, we can do this quickly using Scikit-learn.
 
- We need to look up which hyperparameters are most important for our model from the API. Once we know these, we can create a grid of hyperparameter combinations. You can see how to create this grid on [GitHub](http://jse.amstat.org/v19n3/decock.pdf).
+ We need to look up which hyperparameters are most important for our model from the API. Once we know these, we can create a grid of hyperparameter combinations. You can see how to create this grid on [GitHub](https://github.com/alicepringle/super-learning/blob/main/HousePrices.ipynb).
 
 ```
 {'bootstrap': [True, False],
