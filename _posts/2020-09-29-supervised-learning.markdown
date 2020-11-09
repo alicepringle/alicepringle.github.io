@@ -100,27 +100,63 @@ X_test_onehot = enc.transform(X_test_cat)
 ```
 **Continuous Data**
 
-The process of deciding how to best represent the continuous data is a bit more involved. 
+The process of deciding **how to best represent** the continuous data is a bit more involved. 
 
-Let’s take a look at the column YearBuilt. There are a couple of options of how we could represent this. 
+Let’s take a look at the column `YearBuilt`. There are a couple of options of how we could represent this:
 
-We could choose to make it a categorical feature, having a category per year. This would avoid losing the information about the actual year each house was built, which may be significant. For example, Georgan houses may typically be worth a different amount to houses built in the Victorian Era. The creation of so many categories however is unlikely to be helpful in our model. 
+- We could choose to make it a categorical feature, having a category per year. This would avoid losing the information about the actual year each house was built, which may be significant. For example, Georgan houses may typically be worth a different amount to houses built in the Victorian Era. The creation of so many categories however is unlikely to be helpful in our model. 
 
-The chosen approach is therefore to calculate the relative age of each house. This is done by comparing the year built of the newest house in the training data (2010) to each house. It is important to check that the test set is also compared to 2010, rather than to the newest house in the test set.   
+- A preferable approach would be to calculate the number of years old each house is at the point of sale. Data giving the year of sale of each house is not available, however.
 
-A preferable approach would be to calculate the number of years old each house is at the point of sale. Data giving the year of sale of each house is not available, however.
+- The chosen approach is therefore to calculate the relative age of each house. This is done by comparing the year built of the newest house in the training data (2010) to each house. It is important to check that the test set is also compared to 2010, rather than to the newest house in the test set.   
+
+```
+most_recent = max(X_train['YearBuilt'])
+X_train['YearBuilt'] = abs(X_train['YearBuilt']-most_recent)
+X_test['YearBuilt'] = abs(X_test['YearBuilt']-most_recent)
+```
  
-Secondly, we must consider the distribution of each of these features. We can seen that x,x,x,x are each skewed, to varying degrees. This can be adjusted by taking the log or squareroot of each value.
+Secondly, we must consider the **distribution** of each of these features. The features `YearBuilt` and `GrLivArea` are both skewed. Skewness can be reduced by taking the log or squareroot of each value. In this case sqrt best reduces the skew for `YearBuilt` and log for `GrLivArea`. To avoid taking the log of zero, we add 1 to all values. 
 
-We can see that taking the log of the values reduces the skew from x to x. 
+```
+X_train['YearBuilt'] = np.sqrt(X_train['YearBuilt'])
+X_test['YearBuilt'] = np.sqrt(X_test['YearBuilt'])
+
+X_train['GrLivArea'] = np.log(X_train['GrLivArea']+1)
+X_test['GrLivArea'] = np.log(X_test['GrLivArea']+1)
+```
+
+Taking the log of the values reduces the skew from 0.60 to 0.04:
+
+<div class="imgcap">
+<img src="/assets/bio/skew_yr.jpeg" style="width:50%">
+<img src="/assets/bio/unskew_yr.png" style="width:50%">
+</div>
 
 Incontrast to x, we can see in taking the sqareroot of the x values reduces the skew from x to x.
 
-Lastly, we must consider normalising the continuous data. This involves setting the mean of the data to zero and the standard deviation to one.  
+Lastly, we must consider **normalising** the continuous data. This involves setting the mean of the data to zero and the standard deviation to one.  
 
 Standardising the data is beneficial when using linear regression as it speeds up the process and makes it more numerically robust. It is not necessary for Random Forrest Regression, but as we have not decided upon a model yet, we will standardise the data.  
 
-It is important to standardise the test data using the same scaler as the train data. This is done below.
+It is important to standardise the test data using the same scaler as the train data:
+
+```
+X_train_cont = X_train[['OverallQual', 'YearBuilt','GrLivArea', 'GarageCars']]
+scaler = StandardScaler()
+scaler.fit(X_train_cont)
+X_train_scaled = scaler.transform(X_train_cont)
+
+X_test_cont = X_test[['OverallQual', 'YearBuilt','GrLivArea', 'GarageCars']]
+X_test_scaled = scaler.transform(X_test_cont)
+```
+
+Finally, we must join the continuous and categorical data together again:
+
+```
+X_test_cleaned = np.concatenate((X_test_onehot,X_test_scaled), axis=1)
+X_train_cleaned = np.concatenate((X_train_onehot,X_train_scaled), axis=1)
+```
 
 **Evaluation Metric**
 
