@@ -5,4 +5,4 @@ permalink: /about/
 includelink: true
 ---
 
-Coming soon!
+Aspiring data scientist, studying at the University of Bath.
