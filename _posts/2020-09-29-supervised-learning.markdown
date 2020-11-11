@@ -169,7 +169,7 @@ model.fit(X_train_cleaned,Y_train)
 ```
 2. Linear Regression
 ```
-model = RandomForestRegressor()
+model = LinearRegression()
 model.fit(X_train_cleaned,Y_train)
 ```
 
